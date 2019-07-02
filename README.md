@@ -1,11 +1,4 @@
 # TODO
-1. 자료구조 C언어로 구현
-- Stack
-- Queue
-- Linked List
-- Heap
-- Tree
-- Hash Table
-
+1. 알고리즘 문제 꾸준히 풀기
 2. CS Talk 퀴즈 준비
 3. 알고리즘 퀴즈 준비
