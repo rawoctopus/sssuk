@@ -1,9 +1,24 @@
-//
-//  프로그래머스_전화번호 목록.cpp
-//  Algorithm
-//
-//  Created by Sukho Lim on 03/07/2019.
-//  Copyright © 2019 Sukho Lim. All rights reserved.
-//
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
 
-#include <stdio.h>
+using namespace std;
+
+bool solution(vector<string> phone_book) {
+    bool answer = true;
+    
+    sort(phone_book.begin(), phone_book.end());
+    
+    for(int i = 0; i < phone_book.size(); i++) {
+        for(int j = i+1; j < phone_book.size(); j++) {
+            if(phone_book[j].length() < phone_book[i].length())
+                continue;
+            
+            if(phone_book[j].substr(0, phone_book[i].length()) == phone_book[i])
+                return false;
+        }
+    }
+    
+    return answer;
+}
