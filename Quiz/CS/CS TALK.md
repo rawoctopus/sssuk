@@ -49,3 +49,71 @@
      - 함수가 호출 될 때, 메모리 공간 안에서는 함수를 위한 별도의 임시 공간이 생성된다.
      - 함수 호출시 인자로 전달되는 변수의 reference를 전달한다. (해당 변수 가르키고 있는)
      - 따라서 함수 안에서 인자의 값이 변경되면, 인자로 전달된 변수의 값도 함께 변경된다.
+
+___
+
+
+
+## 7월 14일
+
+1. 다중 스레드 환경에서의 싱글톤 패턴의 문제점과 해결방법을 설명해보시오.
+
+   - 두 개 이상의 스레드가 인스턴스를 획득하기 위해 getPrinter() 메서드에 진입하여 경합을 벌이는 과정에서 서로 다른 두 개의 인스턴스가 만들어지는 형태가 발생할 여지가 있다.
+
+     - 해결방법1) 인스턴스를 필요할 때 생성하지 않고, 처음부터 인스턴스를 만들어 버린다. 단, 인스턴스를 미리 만들어 버리게 되면, 불필요한 시스템 리소스를 낭비할 가능성이 있다.
+
+       ```java
+       public class Singleton() {
+           private static Singleton ourInstance = new Singleton();
+           
+           public static Singleton getInstance() {
+               return ourInstance;
+           }
+           private Singleton() {}
+       }
+       ```
+
+     - 해결방법2) getInstance() 메소드를 동기화 시킨다. 대신 메소드를 동기화 시키면 일반적으로 성능이 100배 정도는 저하된다.
+
+       ```java
+       class Singleton {
+           private static Singleton ourInstance = null;
+           
+           public synchronized static Singleton getInstance() {
+               if(ourInstance == null)
+                   ourInstance = new Singleton();
+               return ourInstance;
+           }
+       }
+       ```
+
+     - 해결방법3) LazyHolder 기법으로 synchronized도 필요 없고, 자바 버전도 상관없는 방법으로, Singleton 클래스의 getInstance() 메소드에서 LazyHolder.INSTANCE를 참조하는 순간 Class가 로딩되며 초기화가 진행된다. Class를 로딩하고 초기화하는 시점은 thread-safe를 보장하기 때문에 volatile이나 synchronized같은 키워드가 없어도 된다.
+
+       ```java
+       class Singleton() {
+           private Singleton() {}
+           
+           public static Singleton getInstance() {
+               return LazyHolder.INSTANCE;
+           }
+           
+           private static class LazyHolder {
+               private static final Singleton INSTANCE = new Singleton();
+           }
+       }
+       ```
+
+2. 프로세스 생성 과정에 대해서 설명해보세요
+
+   - PCB가 생성되며 OS가 실행한 프로그램의 코드를 읽어들여 프로세스에 할당된 메모리의 Text segment에 저장한다.
+   - 초기화된 전역 변수 및 static 변수를 data segment에 할당
+   - 힙과 스택은 초기 메모리 주소만 초기화됨
+   - PCB에 여러 정보가 기록되면 Ready Queue에서 CPU를 할당받기까지 대기한다.
+
+3. 브라우저에서 주소창에 url 입력시 어떤 일이 일어나는가?
+   - 브라우저의 주소창에 url 입력
+   - 브라우저 캐시에서 DNS 레코드를 확인하여 IP주소를 찾음(없다면 DNS resolver를 통해 IP주소를 알아냄)
+   - 브라우저가 서버와 TCP 연결을 시작함
+   - 브라우저가 웹 서버에 HTTP 요청을 보냄
+   - 서버가 요청을 처리하고 응답을 되돌려 보냄
+   - 브라우저는 서버가 보낸 HTML 내용을 표시
