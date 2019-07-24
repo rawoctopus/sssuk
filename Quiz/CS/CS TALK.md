@@ -198,3 +198,20 @@ ___
          if (right > pivot) quickSort(arr, pivot+1, right);
      }
      ~~~
+
+
+
+## 7월 28일
+
+1. HTTP와 HTTPS 차이점
+   - URI
+     - HTTP는 http://로 시작하고 HTTPS는 https://로 시작
+   - 암호화 여부
+     - HTTP는 암호화가 전혀 되어 있지 않은 프로토콜이다. 하지만 HTTPS는 보안성을 강조하기 위해 패킷을 암호화하여 전송한다.
+     - 암호화는 TLS(Transport Layer Security)라고 하여 Transport 계층에서 이루어진다.
+   - 속도 차이
+     - 암호화 과정 때문에 HTTP가 HTTPS보다 속도가 더 빠르지만, 요즘은 인터넷 속도가 빨라졌기 때문에 사실상 큰 차이는 없다.
+2. MAC 주소란?
+   - 네트워크 상에서 서로를 구분하기 위하여 Device마다 할당된 물리적인 주소. MAC 주소는 총 12자리 숫자로 구성되어 있으며 숫자중 앞의 6자리(24bit)는 벤더사에 할당되며 나머지 6자리(24bit)는 각 벤더에서 제품에 할당한다.
+   - _cf) 통신을 위해서는 MAC 주소를 알아야 한다. IP주소로 MAC 주소를 알기 위해서는 IP주소를 MAC으로 바꾸는 ARP(Address Resolution Protocol) 과정이 필요하다._
+
